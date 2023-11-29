@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content='{{ csrf_token() }}'>
+
+    <title> Monitoring | Hi-Prof Kiosk</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet" href='/static/argon/vendor/nucleo/css/nucleo.css' type="text/css">
+    <link rel="stylesheet" href='/static/argon/vendor/@fortawesome/fontawesome-free/css/all.min.css' type="text/css">
+    <link rel="stylesheet" href='/static/argon/css/argon.min.css' type="text/css">
+
+    <style>
+
+        .no-pad {
+            padding-right: 0px!important;
+            padding-left: 0px!important;
+            padding: 0px!important;
+        }
+
+        .border-cell {
+            border-style: solid;
+            border-color: #004f78;
+            border-width: .1em;
+        }
+
+        .bg-01 {
+            background-color: #FEFADF!important;
+        }
+
+        .bg-02 {
+            background-color: #FEBD89!important;
+        }
+
+        .bg-03 {
+            background-color: #F1F1F1!important;
+        }
+
+        .text-01 {
+            color: #E59567!important;
+        }
+
+        .text-02 {
+            color: #004F78!important;
+        }
+
+        .text-03 {
+            color: #C4D9E7!important;
+        }
+
+        .fs-01 {
+            font-size: 5em;
+        }
+
+        .fs-02 {
+            font-size: 3em;
+        }
+
+        /* ICON/IMAGES */
+
+        .left-container {
+            position: absolute;
+            height: 60%;
+            width: 50%;
+            left: 0;
+            bottom: 0;
+        }
+
+        .right-container {
+            position: absolute;
+            height: 60%;
+            width: 50%;
+            right: 0;
+            bottom: 0;
+        }
+
+        .m2 {
+            left: 0;
+            bottom: 0;
+            height: 90%;
+        }
+
+        .m4 {
+            bottom: 0;
+            height: 60%;
+        }
+
+        .m1 {
+            left: 100%;
+            bottom: 0;
+            height: 40%;
+        }
+
+        .m3 {
+            left: 60%;
+            bottom: 0;
+            height: 50%;
+        }
+
+        .m6 {
+            right: 0;
+            bottom: 0;
+            height: 50%;
+        }
+
+    </style>
+
+</head>
+
+<body class="bg-03">
+
+    <div class="main-content">
+
+        <div class="header bg-02 py-4">
+            <div class="container-fluid">
+                <div class="header-body text-center">
+                    <p id="current_status" class="display-1 fs-02">--</p>
+                    <hr class="border border-white border-5 my-0">
+                    <p id="current_call" class="display-1 fs-01 text-danger">--</p>
+                </div>
+                
+                <div class="col left-container d-flex justify-content-start align-items-end">
+                    <img class="m2" src="{{url_for('static', filename='/img/monitor/M2.png')}}" alt="">
+                    <img class="m4" src="{{url_for('static', filename='/img/monitor/M4.png')}}" alt="">
+                    <img class="m1" src="{{url_for('static', filename='/img/monitor/M1.png')}}" alt="">
+                </div>
+
+                <div class=" col right-container d-flex justify-content-end align-items-end">
+                    <img class="m6" src="{{url_for('static', filename='/img/monitor/M5.png')}}" alt="">
+                    <img class="m4" src="{{url_for('static', filename='/img/monitor/M3.png')}}" alt="">
+                    <img class="m2" src="{{url_for('static', filename='/img/monitor/M6.png')}}" alt="">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-4">
+
+                    <div class="card shadow border-0">
+                        <div class="card-header text-center">
+                            <h2 class="display-5">DECLINED</h2>
+                        </div>
+                        <div id="declined" class="row"></div>
+                    </div>
+
+                </div>
+                <div class="col-8">
+
+                    <div class="card shadow">
+                        <div class="card-header text-center">
+                            <h2 class="display-5">PRIORITY NUMBER</h2>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                {% for i in data.faculties %}
+                                    <div class="col-2 p-2 text-right border">
+                                        <h2 class="display-6">{{i.last_name|upper}}</h2>
+                                    </div>
+                                    <div class="col-2 p-2 text-left border-cell">
+                                        <h2 class="display-6" id="call-{{i.id}}">--</h2>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src='/static/argon/vendor/jquery/dist/jquery.min.js'></script>
+    <script src='/static/argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'></script>
+    <script src='/static/argon/vendor/js-cookie/js.cookie.js'></script>
+    <script src='/static/argon/vendor/jquery.scrollbar/jquery.scrollbar.min.js'></script>
+    <script src='/static/argon/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js'></script>
+    <script src='/static/argon/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'></script>
+
+    <!-- Argon JS -->
+    <script src='/static/argon/js/argon.min.js'></script>
+
+    <!-- Backend JS -->
+    <script src="/static/js/core.js"></script>
+    
+    <script>
+
+        setInterval(function() {
+            
+            Controller.GET('/api/appointment/get/window_data').done(function(result) {
+                console.log(result)
+                if (result.calls.length > 0) {
+                    if(result.calls[0].status == 'Declined') $('#current_status').html('Declining')
+                    else $('#current_status').html(result.calls[0].status)
+                    $('#current_call').html(result.calls[0].faculty_name + ' ' + result.calls[0].priority)
+                }
+                else {
+                    $('#current_status').html('--')
+                    $('#current_call').html('--')
+                }
+                
+                $('[id^="call-"]').html('--')
+                result.calls.forEach(i => {
+                    $('#call-'+i.faculty).html(i.priority)
+                })
+                $('#declined').html('')
+                result.declined.forEach(i=> {
+                    $('#declined').append('<div class="col-12 p-2 border text-center"><h2 class="display-5">'+i.faculty_name + ' ' + i.priority+'</h2> </div>')
+                })
+            })
+
+        }, 3000)
+
+    </script>
+
+</body>
+
+</html>

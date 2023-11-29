@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content='{{ csrf_token() }}'>
+
+    <title>{% block title %}{% endblock %} | Hi-Prof Kiosk</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet" href='/static/argon/vendor/nucleo/css/nucleo.css' type="text/css">
+    <link rel="stylesheet" href='/static/argon/vendor/@fortawesome/fontawesome-free/css/all.min.css' type="text/css">
+    <link rel="stylesheet" href='/static/argon/css/argon.min.css' type="text/css">
+    <link rel="stylesheet" href='/static/css/bootstrap-select.min.css' type="text/css">
+
+    <!-- <link href="/static/argon/assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" /> -->
+    <!-- <link href="/static/argon/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" /> -->
+    <!-- <link href="/static/argon/assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" /> -->
+
+    <style>
+        a.nav-link.active {
+            color: #525f7f !important;
+        }
+        
+        .bg-01 {
+            background-color: #FEFADF!important;
+        }
+
+        .bg-02 {
+            background-color: #FEBD89!important;
+        }
+
+        .bg-03 {
+            background-color: #F1F1F1!important;
+        }
+
+        .bg-04 {
+            background-color: #FFBD59!important;
+        }
+
+        .text-01 {
+            color: #E59567!important;
+        }
+
+        .text-02 {
+            color: #004F78!important;
+        }
+
+        .text-03 {
+            color: #C4D9E7!important;
+        }
+
+        .fs-01 {
+            font-size: 6em;
+        }
+
+        .fs-02 {
+            font-size: 4em;
+        }
+
+        .modal-header {
+            display: block!important;
+            padding: 1.25rem;
+            border-bottom: 0 solid #e9ecef;
+            border-top-left-radius: 0.4375rem;
+            border-top-right-radius: 0.4375rem;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+    </style>
+
+    {% block css %}{% endblock %}
+
+</head>
+<body class="bg-01">
+
+    {% block modal %}{% endblock %}
+    {% include 'faculty/shared/sidebar.html' %}
+    <div class="main-content">
+        {% include 'faculty/shared/navigation.html' %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src='/static/argon/vendor/jquery/dist/jquery.min.js'></script>
+    <script src='/static/argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'></script>
+    <script src='/static/argon/vendor/js-cookie/js.cookie.js'></script>
+    <script src='/static/argon/vendor/jquery.scrollbar/jquery.scrollbar.min.js'></script>
+    <script src='/static/argon/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js'></script>
+    <script src='/static/argon/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'></script>
+
+    <!-- Argon JS -->
+    <script src='/static/argon/js/argon.min.js'></script>
+
+    <!--   Core   -->
+    <!-- <script src="/static/argon/assets/js/plugins/jquery/dist/jquery.min.js"></script> -->
+    <!-- <script src="/static/argon/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script> -->
+    <!--   Optional JS   -->
+    <!-- <script src="/static/argon/assets/js/plugins/chart.js/dist/Chart.min.js"></script> -->
+    <!-- <script src="/static/argon/assets/js/plugins/chart.js/dist/Chart.extension.js"></script> -->
+    <!--   Argon JS   -->
+    <!-- <script src="/static/argon/assets/js/argon-dashboard.min.js?v=1.1.0"></script> -->
+
+    <!-- Bootbox -->
+    <script src="/static/js/bootbox.min.js"></script>
+
+    <!-- Select -->
+    <script src="/static/js/bootstrap-select.min.js"></script>
+
+    <!-- Backend JS -->
+    <script src="/static/js/core.js"></script>
+    
+    <script>
+        
+        var setSideBar = function (element) {
+            $('[id^="menu-"]').removeClass('active');
+            $(element).addClass('active');
+        }
+        var setSideBarTitle = function (element, _title) {
+            $(element + "-title").text(_title);
+        }
+
+    </script>
+    {% block scripts %}{% endblock %}
+    
+</body>
+</html>

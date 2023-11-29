@@ -1,0 +1,19 @@
+
+<nav class="navbar navbar-top navbar-expand navbar-light border-bottom bg-04">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav align-items-center ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link pr-0 sidenav-toggler sidenav-toggler-dark" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="media align-items-center">
+                            <div class="media-body">
+                                <span class="mb-0 text-sm font-weight-bold">{{current_user.first_name}} {{current_user.last_name}}</span>
+                                <img src="{{url_for('static', filename=current_user.image_profile)}}" alt="" class="img-fluid badge-circle" style="min-width: 30px;">
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

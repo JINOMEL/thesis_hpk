@@ -1,0 +1,252 @@
+{% extends 'shared/layout.html' %}
+{% block title %}
+    Overview
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+<div class="main-content" id="panel">
+    <!-- Header -->
+    <div class="header pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-7">
+                        <p class="display-2 text-default d-inline-block mb-0">Overview</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-2 col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Appointments</h5>
+                                        <span class="h2 font-weight-bold mb-0">{{data.appointments|length}}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                                            <i class="ni ni-calendar-grid-58"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Faculties</h5>
+                                        <span class="h2 font-weight-bold mb-0">{{data.accounts|selectattr("role_id", "equalto", 2)|list|length}}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                            <i class="ni ni-single-02"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Students</h5>
+                                        <span class="h2 font-weight-bold mb-0">{{data.accounts|selectattr("role_id", "equalto", 3)|list|length}}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-blue text-white rounded-circle shadow">
+                                            <i class="ni ni-hat-3"></i>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Guests</h5>
+                                        <span class="h2 font-weight-bold mb-0">{{data.accounts|selectattr("role_id", "equalto", 4)|list|length}}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                            <i class="ni ni-badge"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+
+    <div class="container-fluid mt--6">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Faculties List</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">Account Type</th>
+                                    <th scope="col">Inquiry Attempts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for account in data.accounts|selectattr("role_id", "equalto", 2) %}
+                                <tr>
+                                    <th scope="row">
+                                        {{account.first_name}} {{account.last_name}}
+                                    </th>
+                                    <td>
+                                        {{account.role.role}}
+                                    </td>
+                                    <td>
+                                        {{account.inquiries}}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Admin Accounts List</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">Account Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for account in data.accounts|selectattr("role_id", "equalto", 1) %}
+                                <tr>
+                                    <th scope="row">
+                                        {{account.first_name}} {{account.last_name}}
+                                    </th>
+                                    <td>
+                                        {{account.role.role}}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Students List</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">ID Number</th>
+                                    <th scope="col">Account Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for account in data.accounts|selectattr("role_id", "equalto", 3) %}
+                                <tr>
+                                    <th scope="row">
+                                        {{account.first_name}} {{account.last_name}}
+                                    </th>
+                                    <td>
+                                        {{account.id_number}}
+                                    </td>
+                                    <td>
+                                        {{account.role.role}}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Guests List</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">Account Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for account in data.accounts|selectattr("role_id", "equalto", 4) %}
+                                <tr>
+                                    <th scope="row">
+                                        {{account.first_name}} {{account.last_name}}
+                                    </th>
+                                    <td>
+                                        {{account.role.role}}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    
+    setSideBar('#menu-dashboard');
+
+</script>
+{% endblock %}
